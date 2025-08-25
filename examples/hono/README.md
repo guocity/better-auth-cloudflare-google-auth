@@ -11,6 +11,7 @@ This example demonstrates how to integrate [Better Auth](https://github.com/bett
 - 🌐 **Cloudflare IP Detection**: Automatic IP address detection
 - 👤 **Anonymous Authentication**: Built-in anonymous user authentication
 - 🔐 **Session Management**: Secure session handling with geolocation
+- 🔍 **Google OAuth**: Google authentication with OAuth 2.0
 
 ## Getting Started
 
@@ -46,6 +47,24 @@ database_id = "your-database-id"
 binding = "KV"
 id = "your-kv-namespace-id"
 ```
+
+4. Set up environment variables for Google OAuth:
+
+```bash
+cp .dev.vars.sample .dev.vars
+```
+
+5. **Configure Google OAuth** (required for Google authentication):
+   - Go to [Google Cloud Console](https://console.developers.google.com/)
+   - Create a new project or select an existing one
+   - Enable the Google+ API
+   - Go to Credentials and create OAuth 2.0 Client ID
+   - Set authorized redirect URI to: `http://localhost:8787/api/auth/callback/google`
+   - Update `.dev.vars` with your Google OAuth credentials
+
+6. **Set up Better Auth secret**:
+   - Generate a secure secret: `openssl rand -hex 32`
+   - Update `BETTER_AUTH_SECRET` in `.dev.vars`
 
 ### Database Setup
 
@@ -122,14 +141,28 @@ wrangler.toml            # Cloudflare Worker configuration
 
 ### API Endpoints
 
-- `GET /` - Demo page with anonymous authentication UI
+- `GET /` - Demo page with authentication UI (anonymous + Google OAuth)
 - `GET /health` - Health check endpoint
 - `GET /protected` - Protected route demo
 - `ALL /api/auth/*` - All Better Auth routes (handled by better-auth)
 - `POST /api/auth/sign-in/anonymous` - Anonymous login
+- `GET /api/auth/sign-in/google` - Google OAuth login
+- `GET /api/auth/callback/google` - Google OAuth callback
 - `POST /api/auth/sign-out` - Sign out
 - `GET /api/auth/get-session` - Get current session
 - `GET /api/auth/cloudflare/geolocation` - Get geolocation data
+
+### Authentication Methods
+
+#### Anonymous Authentication
+- Click "Login Anonymously" to create a temporary session
+- No credentials required
+- Includes full geolocation tracking
+
+#### Google OAuth
+- Click "Continue with Google" to authenticate with Google
+- Requires valid Google OAuth credentials in `.dev.vars`
+- Full user profile and session management
 
 ### Geolocation Tracking
 

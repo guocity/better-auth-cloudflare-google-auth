@@ -18,6 +18,12 @@ function createAuth(env?: CloudflareBindings, cf?: IncomingRequestCfProperties) 
         telemetry: {
             enabled: false,
         },
+        socialProviders: {
+            google: {
+                clientId: env?.GOOGLE_CLIENT_ID || "your-google-client-id",
+                clientSecret: env?.GOOGLE_CLIENT_SECRET || "your-google-client-secret",
+            },
+        },
         ...withCloudflare(
             {
                 autoDetectIpAddress: true,
@@ -37,12 +43,6 @@ function createAuth(env?: CloudflareBindings, cf?: IncomingRequestCfProperties) 
             {
                 emailAndPassword: {
                     enabled: true,
-                },
-                socialProviders: {
-                    google: {
-                        clientId: env?.GOOGLE_CLIENT_ID || "your-google-client-id",
-                        clientSecret: env?.GOOGLE_CLIENT_SECRET || "your-google-client-secret",
-                    },
                 },
                 plugins: [anonymous()],
                 rateLimit: {
