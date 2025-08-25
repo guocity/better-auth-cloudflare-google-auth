@@ -13,6 +13,17 @@ function createAuth(env?: CloudflareBindings, cf?: IncomingRequestCfProperties) 
     const db = env ? drizzle(env.DATABASE, { schema, logger: true }) : ({} as any);
 
     return betterAuth({
+        baseURL: env?.BETTER_AUTH_URL || "http://localhost:8787",
+        secret: env?.BETTER_AUTH_SECRET || "fallback-secret-change-in-production",
+        telemetry: {
+            enabled: false,
+        },
+        socialProviders: {
+            google: {
+                clientId: env?.GOOGLE_CLIENT_ID || "your-google-client-id",
+                clientSecret: env?.GOOGLE_CLIENT_SECRET || "your-google-client-secret",
+            },
+        },
         ...withCloudflare(
             {
                 autoDetectIpAddress: true,

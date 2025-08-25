@@ -1,0 +1,17 @@
+# Better Auth Configuration - Sample
+# Copy this file to .dev.vars and fill in your actual values
+
+# Better Auth Configuration
+BETTER_AUTH_SECRET=your-secret-key-here-change-this-in-production
+
+# Google OAuth Configuration
+# 1. Go to https://console.developers.google.com/
+# 2. Create a new project or select an existing one
+# 3. Enable the Google+ API
+# 4. Go to Credentials and create OAuth 2.0 Client ID
+# 5. Set authorized redirect URI to: http://localhost:8787/api/auth/callback/google
+GOOGLE_CLIENT_ID=your-google-client-id-here
+GOOGLE_CLIENT_SECRET=your-google-client-secret-here
+
+# Base URL for OAuth redirects
+BETTER_AUTH_URL=http://localhost:8787
